@@ -1,2 +1,17 @@
-docker run --name mitmproxy --rm -d -p 192.168.0.100:8888:8080 -p 127.0.0.1:8889:8081 -v $(pwd):/data  mitmproxy/mitmproxy mitmweb --web-iface 0.0.0.0 -s /data/scripts/redirect.py -s /data/scripts/modify_response.py
+CONTAINER_NAME='mitmproxy'
+IMAGE_NAME='brunowdev/mitmproxy-local:latest'
+
+CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
+if [ "${CID}" ]; then
+  echo "stoping container..."
+  docker stop ${CONTAINER_NAME}
+  echo "done"
+fi
+unset CID
+
+echo "starting container"
+docker run --network host --name ${CONTAINER_NAME} --rm -d \
+    -v $(pwd):/data ${IMAGE_NAME} mitmweb --web-iface 0.0.0.0 -s /data/scripts/redirect.py
+
+echo "done"
 docker logs mitmproxy -f
