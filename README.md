@@ -2,7 +2,17 @@
 
 [mitmproxy](https://mitmproxy.org/) is a very powerful interactive proxy for intercepting HTTP/HTTPS communication.
 
-On this image, we change the behavior of creating a new CA on each startup. This strategy is for development environment only! 
+On this image, we change the behavior of creating a new CA on each startup. 
+By doing this, any time you restart the container, the CA will remain the same.
+This strategy is for development environment only! 
+
+`You must import a certificate version from ca-fixed folder.`
+
+Current CA Info:
+```
+Issued On	Tuesday, August 27, 2019 at 10:12:33 PM
+Expires On	Saturday, August 28, 2021 at 10:12:33 PM
+```
 
 ## Start the proxy
 
